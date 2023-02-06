@@ -5,13 +5,15 @@ const Blog = require('../models/blog.model')
 exports.createBlog = async (req, res) => {
     try {
         console.log(req.body)
-        const {title, description, picture} = req.body;
+        const {title, description} = req.body;
         
-        if(!(title && description && picture)) return res.json({success: false,message: "All inputs are required" })
+        if(!(title && description)) return res.json({success: false,message: "All inputs are required" })
+        if(!req.file) return res.json({success: false, message: "Picture required"})
+        console.log(req.file)
         const blog = await Blog.create({
             title: title,
             description: description,
-            picture: picture
+            picture: req.file.path
         });
         
         if(!blog) return res.json({success: false, message:"something went wrong"})

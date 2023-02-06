@@ -1,13 +1,14 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const path = require('path')
 
 require('dotenv').config();
 require('./config/database').connect();
 
 
 const blogRoutes = require('./routers/blog.route')
-
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
