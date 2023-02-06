@@ -20,3 +20,24 @@ exports.createBlog = async (req, res) => {
         return res.json({success: false, error: e.message})
     }
 }
+
+exports.getAllBlogs = async (req, res) => {
+    try {  
+        const blogs = await Blog.find().select("-_id -__v")
+        return res.json({success: true, data: blogs})
+
+    } catch(e) {
+        return res.json({success: false, error: e.message})
+    }
+}
+
+
+exports.getBlog = async (req, res) => {
+    try {
+        const blog = await Blog.findOne({_id: req.params.id});
+        if(blog) return res.json({success: true, data: blog});
+        return res.json({success: false, message: "no blog match with this id"})
+    } catch(e) {
+        return res.json({success: false, error: e.message})
+    }
+}
