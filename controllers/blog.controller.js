@@ -5,7 +5,7 @@ const Blog = require('../models/blog.model')
 exports.createBlog = async (req, res) => {
     try {
         console.log(req.body)
-        const {title, description} = req.body;
+        const {title, description,author} = req.body;
         
         if(!(title && description)) return res.json({success: false,message: "All inputs are required" })
         if(!req.file) return res.json({success: false, message: "Picture required"})
@@ -13,6 +13,7 @@ exports.createBlog = async (req, res) => {
         const blog = await Blog.create({
             title: title,
             description: description,
+            author:author,
             picture: req.file.path
         });
         
@@ -25,7 +26,7 @@ exports.createBlog = async (req, res) => {
 
 exports.getAllBlogs = async (req, res) => {
     try {  
-        const blogs = await Blog.find().select("-_id -__v")
+        const blogs = await Blog.find().select("-__v")
         return res.json({success: true, data: blogs})
 
     } catch(e) {

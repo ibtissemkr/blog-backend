@@ -7,8 +7,8 @@ const { createBlog, getAllBlogs, getBlog } = require('../controllers/blog.contro
 
 
 router.post('/add-blog', upload.single('picture'), createBlog)
-router.get('/',getAllBlogs)
-router.get('/:id', getBlog)
+router.get('/all',getAllBlogs)
+router.get('/blog/:id', getBlog)
 
 
 
